@@ -15,6 +15,7 @@ User.prototype.save = function save(callback) {
 
     mongodb.open(function(err,db){
        if(err){
+           mongodb.close();
            return callback(err);
        }
         db.collection('users',function(err,collection){
