@@ -35,13 +35,23 @@ app.configure(function() {
     app.use(express.json());
     app.use(express.urlencoded());
     app.use(express.methodOverride());
+
+    app.use(function(req, res, next){
+        res.locals.user = req.session.user;
+        res.locals.error = req.session.error;
+        res.locals.success = req.session.success;
+        req.session.success = null;
+        req.session.error = null;
+        next();
+    });
     app.use(app.router);
     //app.use(express.router(routes));
     app.use(express.static(path.join(__dirname, 'public')));
+
+
 });
 
 routes(app);
-
 
 
 // development only
